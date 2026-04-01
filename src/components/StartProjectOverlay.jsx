@@ -33,14 +33,11 @@ export default function StartProjectOverlay({ isOpen, onClose }) {
                 </h2>
               </div>
 
-              <button
-                type="button"
-                onClick={onClose}
-                aria-label="Close start project form"
-                className="hover-lift inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/20 bg-white/5 text-white transition hover:bg-white/12"
-              >
-                <X className="h-5 w-5 shrink-0 text-white" strokeWidth={2.8} />
-              </button>
+              <div onClick={onClose} className="cursor-pointer border border-white/20 rounded-full p-2 hover:border-amber-400 hover:text-amber-400 ">
+                <X />
+              </div>
+
+    
             </div>
 
             <p className="max-w-3xl text-left text-sm leading-7 text-white/72 sm:text-base">
