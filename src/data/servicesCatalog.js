@@ -1,7 +1,6 @@
 import digitalDevImage from "../assets/services/digitalDev.jpg";
 import influencerMarketingImage from "../assets/services/influencerMarketing.jpg";
 import socialMediaImage from "../assets/services/SocialMedia.jpg";
-import videographyImage from "../assets/services/VideoGraphy.jpg";
 import brandGuidelinesImage from "../assets/servicesPages/brand - Copy.webp";
 import contentCreationImage from "../assets/servicesPages/contentCreation.jpg";
 import facebookMarketingImage from "../assets/servicesPages/facebook.png";
@@ -16,7 +15,7 @@ import project2 from "../assets/project/project2.png";
 import project3 from "../assets/project/project3.png";
 import project4 from "../assets/project/project4.png";
 import project5 from "../assets/project/project5.png";
-import project6 from "../assets/project/project6.jpg";
+
 
 function createService(slug, title, category, description, image, bullets) {
   return {
@@ -116,7 +115,7 @@ export const serviceGroups = [
       createService("visual-identity", "Visual Identity", "Branding", "Identity systems designed to make your brand feel premium, distinctive, and scalable.", brandGuidelinesImage, ["Identity exploration", "Color and typography systems", "Application mockups"]),
       createService("logo-systems", "Logo Systems", "Branding", "Primary marks, responsive logo sets, and practical brand signatures for digital and print use.", brandGuidelinesImage, ["Logo concepts", "Responsive lockups", "Usage guidance"]),
       createService("brand-guidelines", "Brand Guidelines", "Branding", "Clear documentation that helps teams use your brand consistently across every touchpoint.", brandGuidelinesImage, ["Usage rules", "Visual standards", "Team-ready documentation"]),
-      createService("packaging-direction", "Packaging Direction", "Branding", "Packaging design direction that supports shelf presence, storytelling, and premium perception.", project6, ["Packaging moodboards", "Layout systems", "Brand-consistent packaging direction"]),
+      createService("packaging-direction", "Packaging Direction", "Branding", "Packaging design direction that supports shelf presence, storytelling, and premium perception.", project4, ["Packaging moodboards", "Layout systems", "Brand-consistent packaging direction"]),
     ],
   },
   {

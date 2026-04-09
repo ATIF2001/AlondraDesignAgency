@@ -211,6 +211,15 @@ select {
   animation: logo-drift 5.8s ease-in-out infinite;
 }
 
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .logo-drift[data-delay="1"] {
   animation-delay: 0.3s;
 }

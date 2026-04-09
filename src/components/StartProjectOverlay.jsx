@@ -1,7 +1,18 @@
 import { Mail, MapPin, Phone, X } from "lucide-react";
+import { useLeadForm } from "../hooks/useLeadForm";
 import { CartoonButton } from "./ui/cartoon-button";
 
 export default function StartProjectOverlay({ isOpen, onClose }) {
+  const { formValues, isSubmitting, status, handleChange, handleSubmit } = useLeadForm();
+  const phoneLinks = [
+    { label: "800-644-000", href: "tel:800644000" },
+    { label: "+97126311977", href: "tel:+97126311977" },
+  ];
+  const emailLinks = [
+    { label: "info@joveraits.ae", href: "mailto:info@joveraits.ae" },
+    { label: "info@jovera.ae", href: "mailto:info@jovera.ae" },
+  ];
+
   return (
     <div
       className={`fixed inset-0 z-50 transition ${
@@ -72,9 +83,14 @@ export default function StartProjectOverlay({ isOpen, onClose }) {
                     <div>
                       <h4 className="text-xl font-medium text-white">Phone Number</h4>
                       <p className="mt-3 text-base leading-7 text-white/65">
-                        800-644-000
-                        <br />
-                        +97126311977
+                        {phoneLinks.map((item, index) => (
+                          <span key={item.label}>
+                            <a href={item.href} className="transition hover:text-[#d4a514]">
+                              {item.label}
+                            </a>
+                            {index < phoneLinks.length - 1 ? <br /> : null}
+                          </span>
+                        ))}
                       </p>
                     </div>
                   </div>
@@ -86,21 +102,33 @@ export default function StartProjectOverlay({ isOpen, onClose }) {
                     <div>
                       <h4 className="text-xl font-medium text-white">Email Address</h4>
                       <p className="mt-3 text-base leading-7 text-white/65">
-                        info@joveraits.ae
-                        <br />
-                        info@jovera.ae
+                        {emailLinks.map((item, index) => (
+                          <span key={item.label}>
+                            <a href={item.href} className="transition hover:text-[#d4a514]">
+                              {item.label}
+                            </a>
+                            {index < emailLinks.length - 1 ? <br /> : null}
+                          </span>
+                        ))}
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <form className="hover-lift border border-white/35 px-7 py-7 sm:px-10 sm:py-8">
+              <form
+                onSubmit={handleSubmit}
+                className="hover-lift border border-white/35 px-7 py-7 sm:px-10 sm:py-8"
+              >
                 <div className="space-y-6 text-left">
                   <label className="block">
                     <span className="text-xl text-white">Name</span>
                     <input
+                      name="name"
                       type="text"
+                      value={formValues.name}
+                      onChange={handleChange}
+                      required
                       className="mt-3 w-full border-b border-white/35 bg-transparent pb-3 text-base text-white outline-none placeholder:text-white/20 focus:border-white"
                     />
                   </label>
@@ -108,7 +136,11 @@ export default function StartProjectOverlay({ isOpen, onClose }) {
                   <label className="block">
                     <span className="text-xl text-white">Phone Number</span>
                     <input
+                      name="phone"
                       type="text"
+                      value={formValues.phone}
+                      onChange={handleChange}
+                      required
                       className="mt-3 w-full border-b border-white/35 bg-transparent pb-3 text-base text-white outline-none placeholder:text-white/20 focus:border-white"
                     />
                   </label>
@@ -116,15 +148,11 @@ export default function StartProjectOverlay({ isOpen, onClose }) {
                   <label className="block">
                     <span className="text-xl text-white">Email</span>
                     <input
+                      name="email"
                       type="email"
-                      className="mt-3 w-full border-b border-white/35 bg-transparent pb-3 text-base text-white outline-none placeholder:text-white/20 focus:border-white"
-                    />
-                  </label>
-
-                  <label className="block">
-                    <span className="text-xl text-white">Project Type</span>
-                    <input
-                      type="text"
+                      value={formValues.email}
+                      onChange={handleChange}
+                      required
                       className="mt-3 w-full border-b border-white/35 bg-transparent pb-3 text-base text-white outline-none placeholder:text-white/20 focus:border-white"
                     />
                   </label>
@@ -132,14 +160,29 @@ export default function StartProjectOverlay({ isOpen, onClose }) {
                   <label className="block">
                     <span className="text-xl text-white">Message</span>
                     <textarea
+                      name="description"
                       rows="3"
+                      value={formValues.description}
+                      onChange={handleChange}
+                      required
                       className="mt-3 w-full border-b border-white/35 bg-transparent pb-3 text-base text-white outline-none placeholder:text-white/20 focus:border-white"
                     />
                   </label>
 
+                  {status.message ? (
+                    <p
+                      className={`text-sm ${
+                        status.type === "success" ? "text-[#d4a514]" : "text-[#ff8f8f]"
+                      }`}
+                    >
+                      {status.message}
+                    </p>
+                  ) : null}
+
                   <CartoonButton
                     type="submit"
-                    label="Submit"
+                    label={isSubmitting ? "Sending..." : "Submit"}
+                    disabled={isSubmitting}
                     color="bg-white"
                     textClassName="text-black"
                     borderClassName="border-[#d8d8d8]"

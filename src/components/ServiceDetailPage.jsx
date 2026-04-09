@@ -2,6 +2,7 @@ import { CheckCircle2 } from "lucide-react";
 import { useRef } from "react";
 import ContactSection from "./ContactSection";
 import PageIntro from "./PageIntro";
+import Seo from "./Seo";
 import { CartoonButton } from "./ui/cartoon-button";
 
 export default function ServiceDetailPage({ service, onBackHome }) {
@@ -13,6 +14,12 @@ export default function ServiceDetailPage({ service, onBackHome }) {
 
   return (
     <>
+      <Seo
+        title={service.title}
+        description={service.description}
+        path={`/services/${service.slug}`}
+        keywords={`${service.title}, ${service.category}, Alondra services, digital marketing UAE`}
+      />
       <PageIntro
         eyebrow={service.category}
         title={service.title}

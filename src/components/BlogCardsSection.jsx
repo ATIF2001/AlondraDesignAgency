@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { CartoonButton } from "./ui/cartoon-button";
 
 export default function BlogCardsSection({ posts }) {
+  const navigate = useNavigate();
+
   return (
     <section className="bg-black px-6 py-16 sm:px-10 lg:px-16 lg:py-24 xl:px-20">
       <div className="mx-auto max-w-7xl">
@@ -14,6 +17,7 @@ export default function BlogCardsSection({ posts }) {
           </h2>
           <CartoonButton
             label="Our Blog"
+            onClick={() => navigate("/blogs")}
             color="bg-[#d4a514]"
             textClassName="text-black"
             borderClassName="border-[#111]"
@@ -31,13 +35,17 @@ export default function BlogCardsSection({ posts }) {
               data-delay={index + 1}
               className="reveal hover-lift soft-panel flex h-full flex-col overflow-hidden bg-[#1d1d1d] shadow-[0_0_0_1px_rgba(255,255,255,0.04)]"
             >
-              <div className="aspect-[4/2.35] overflow-hidden">
+              <button
+                type="button"
+                onClick={() => navigate(`/blogs/${post.slug}`)}
+                className="block aspect-[4/2.35] w-full overflow-hidden"
+              >
                 <img
                   src={post.image}
                   alt={post.title}
                   className="h-full w-full object-cover transition duration-500 hover:scale-[1.04]"
                 />
-              </div>
+              </button>
 
               <div className="flex flex-1 flex-col px-8 py-7 text-left">
                 <div className="flex items-center gap-4 text-xs uppercase tracking-[0.14em] text-white/48">
@@ -46,17 +54,23 @@ export default function BlogCardsSection({ posts }) {
                   <span>{post.date}</span>
                 </div>
 
-                <h3
-                  className="mt-6 max-w-[18rem] text-3xl font-semibold leading-[1.22] text-white"
-                  style={{
-                    display: "-webkit-box",
-                    WebkitBoxOrient: "vertical",
-                    WebkitLineClamp: 3,
-                    overflow: "hidden",
-                  }}
+                <button
+                  type="button"
+                  onClick={() => navigate(`/blogs/${post.slug}`)}
+                  className="block text-left"
                 >
-                  {post.title}
-                </h3>
+                  <h3
+                    className="mt-6 max-w-[18rem] text-3xl font-semibold leading-[1.22] text-white"
+                    style={{
+                      display: "-webkit-box",
+                      WebkitBoxOrient: "vertical",
+                      WebkitLineClamp: 3,
+                      overflow: "hidden",
+                    }}
+                  >
+                    {post.title}
+                  </h3>
+                </button>
 
                 <div className="mt-auto pt-8">
                   <div className="h-px w-full bg-white/12" />
@@ -64,6 +78,7 @@ export default function BlogCardsSection({ posts }) {
                   <div className="mt-7">
                     <CartoonButton
                       label="Read More"
+                      onClick={() => navigate(`/blogs/${post.slug}`)}
                       color="bg-[#d4a514]"
                       textClassName="text-black"
                       borderClassName="border-[#111]"

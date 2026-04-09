@@ -1,4 +1,5 @@
 import { Mail, MapPin, Phone } from "lucide-react";
+import { useLeadForm } from "../hooks/useLeadForm";
 import { CartoonButton } from "./ui/cartoon-button";
 
 export default function ContactSection({
@@ -6,6 +7,16 @@ export default function ContactSection({
   title = "Contact us today",
   description = "We'd love to hear from you. Contact us and our team will get back to you as soon as possible.",
 }) {
+  const { formValues, isSubmitting, status, handleChange, handleSubmit } = useLeadForm();
+  const phoneLinks = [
+    { label: "800-644-000", href: "tel:800644000" },
+    { label: "+97126311977", href: "tel:+97126311977" },
+  ];
+  const emailLinks = [
+    { label: "info@joveraits.ae", href: "mailto:info@joveraits.ae" },
+    { label: "info@jovera.ae", href: "mailto:info@jovera.ae" },
+  ];
+
   return (
     <section
       ref={sectionRef}
@@ -48,9 +59,14 @@ export default function ContactSection({
                 <div>
                         <h4 className="text-2xl font-semibold text-white">Phone Number</h4>
                         <p className="body-copy mt-4">
-                          800-644-000
-                          <br />
-                          +97126311977
+                          {phoneLinks.map((item, index) => (
+                            <span key={item.label}>
+                              <a href={item.href} className="transition hover:text-[#d4a514]">
+                                {item.label}
+                              </a>
+                              {index < phoneLinks.length - 1 ? <br /> : null}
+                            </span>
+                          ))}
                   </p>
                 </div>
               </div>
@@ -62,9 +78,14 @@ export default function ContactSection({
                 <div>
                         <h4 className="text-2xl font-semibold text-white">Email Address</h4>
                         <p className="body-copy mt-4">
-                          info@joveraits.ae
-                          <br />
-                          info@jovera.ae
+                          {emailLinks.map((item, index) => (
+                            <span key={item.label}>
+                              <a href={item.href} className="transition hover:text-[#d4a514]">
+                                {item.label}
+                              </a>
+                              {index < emailLinks.length - 1 ? <br /> : null}
+                            </span>
+                          ))}
                   </p>
                 </div>
               </div>
@@ -72,6 +93,7 @@ export default function ContactSection({
           </div>
 
           <form
+            onSubmit={handleSubmit}
             className="reveal hover-lift border border-white/35 px-8 py-10 sm:px-12 sm:py-12"
             data-reveal
             data-delay="2"
@@ -80,7 +102,11 @@ export default function ContactSection({
               <label className="block">
                 <span className="text-2xl text-white">Name</span>
                 <input
+                  name="name"
                   type="text"
+                  value={formValues.name}
+                  onChange={handleChange}
+                  required
                   className="mt-4 w-full border-b border-white/35 bg-transparent pb-4 text-lg text-white outline-none placeholder:text-white/20 focus:border-white"
                 />
               </label>
@@ -88,7 +114,11 @@ export default function ContactSection({
               <label className="block">
                 <span className="text-2xl text-white">Phone Number</span>
                 <input
+                  name="phone"
                   type="text"
+                  value={formValues.phone}
+                  onChange={handleChange}
+                  required
                   className="mt-4 w-full border-b border-white/35 bg-transparent pb-4 text-lg text-white outline-none placeholder:text-white/20 focus:border-white"
                 />
               </label>
@@ -96,7 +126,11 @@ export default function ContactSection({
               <label className="block">
                 <span className="text-2xl text-white">Email</span>
                 <input
+                  name="email"
                   type="email"
+                  value={formValues.email}
+                  onChange={handleChange}
+                  required
                   className="mt-4 w-full border-b border-white/35 bg-transparent pb-4 text-lg text-white outline-none placeholder:text-white/20 focus:border-white"
                 />
               </label>
@@ -104,14 +138,29 @@ export default function ContactSection({
               <label className="block">
                 <span className="text-2xl text-white">Message</span>
                 <textarea
+                  name="description"
                   rows="4"
+                  value={formValues.description}
+                  onChange={handleChange}
+                  required
                   className="mt-4 w-full border-b border-white/35 bg-transparent pb-4 text-lg text-white outline-none placeholder:text-white/20 focus:border-white"
                 />
               </label>
 
+              {status.message ? (
+                <p
+                  className={`text-sm ${
+                    status.type === "success" ? "text-[#d4a514]" : "text-[#ff8f8f]"
+                  }`}
+                >
+                  {status.message}
+                </p>
+              ) : null}
+
               <CartoonButton
                 type="submit"
-                label="SUMIT"
+                label={isSubmitting ? "Sending..." : "Submit"}
+                disabled={isSubmitting}
                 color="bg-white"
                 textClassName="text-black"
                 borderClassName="border-[#d8d8d8]"

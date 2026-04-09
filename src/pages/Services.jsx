@@ -2,6 +2,7 @@ import { useRef } from "react";
 import ContactSection from "../components/ContactSection";
 import HowItWorksSection from "../components/HowItWorksSection";
 import PageIntro from "../components/PageIntro";
+import Seo from "../components/Seo";
 import ServiceCardsShowcase from "../components/ServiceCardsShowcase";
 import { howItWorksImageSrc, workflowSteps } from "../data/siteContent";
 
@@ -14,6 +15,12 @@ export default function Services() {
 
   return (
     <>
+      <Seo
+        title="Services"
+        description="Explore Alondra services including social media marketing, branding, web development, UI/UX, content creation, SEO, SEM, and production."
+        path="/services"
+        keywords="marketing services UAE, social media marketing, branding, website design, UI UX, content creation"
+      />
       <PageIntro
         eyebrow="Services"
         title="Performance-led services built for modern brands"

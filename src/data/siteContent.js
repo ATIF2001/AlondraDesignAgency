@@ -15,7 +15,6 @@ import project2 from "../assets/project/project2.png";
 import project3 from "../assets/project/project3.png";
 import project4 from "../assets/project/project4.png";
 import project5 from "../assets/project/project5.png";
-import project6 from "../assets/project/project6.jpg";
 import digitalDevImage from "../assets/services/digitalDev.jpg";
 import influencerMarketingImage from "../assets/services/influencerMarketing.jpg";
 
@@ -23,7 +22,7 @@ export const projects = [
   { title: "Jovera Group", image: project1 },
   { title: "Jovera Group", image: project2 },
   { title: "Jovera Group", image: project3 },
-  { title: "Jovera Group", image: project6 },
+  { title: "Jovera Group", image: project4 },
   { title: "Jovera Group", image: project4 },
   { title: "Jovera Group", image: project5 },
 ];

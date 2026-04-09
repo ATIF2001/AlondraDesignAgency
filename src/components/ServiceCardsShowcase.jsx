@@ -75,34 +75,36 @@ const cards = [
   },
 ];
 
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
+}
+
 function getCardStyle(index, progress, totalCards) {
-  const relativeIndex = index - progress;
-  const positiveOffset = Math.max(relativeIndex, 0);
-  const negativeOffset = Math.max(-relativeIndex, 0);
+  const activeIndex = Math.floor(progress);
+  const relativeIndex = index - activeIndex;
+  const isPassed = relativeIndex < 0;
+  const isActive = relativeIndex === 0;
+  const futureDepth = Math.max(relativeIndex, 0);
+  const takeoverProgress = clamp(progress - (index - 1), 0, 1);
+  const easedTakeover = 1 - (1 - takeoverProgress) ** 4;
 
-  const translateY =
-    relativeIndex >= 0
-      ? Math.min(positiveOffset * 14, 28)
-      : -Math.min(negativeOffset * 3.5, 9);
+  const bottomPeek = 82;
+  const extraPeek = Math.min(Math.max(futureDepth - 1, 0) * 6, 18);
+  const parkedOffset = bottomPeek + extraPeek;
+  const travelOffset = parkedOffset * (1 - easedTakeover);
 
-  const scale =
-    relativeIndex >= 0
-      ? 1 - Math.min(positiveOffset * 0.022, 0.05)
-      : 0.992 - Math.min(negativeOffset * 0.01, 0.03);
-
-  const opacity =
-    relativeIndex >= 0
-      ? 1
-      : Math.max(0.2, 0.42 - negativeOffset * 0.14);
-
-  const zIndex =
-    relativeIndex >= 0
-      ? totalCards - index + 20
-      : totalCards - index;
+  const translateY = isPassed || isActive ? 0 : travelOffset;
+  const scale = isPassed || isActive ? 1 : 0.992 + easedTakeover * 0.008;
+  const opacity = 1;
+  const blur = 0;
+  const shadowStrength = isActive ? 0.22 : 0.18 + easedTakeover * 0.05;
+  const zIndex = isPassed ? index : totalCards + index + 20;
 
   return {
     transform: `translate3d(0, ${translateY}%, 0) scale(${scale})`,
     opacity,
+    filter: `blur(${blur}px)`,
+    boxShadow: `0 28px 70px rgba(0, 0, 0, ${shadowStrength})`,
     zIndex,
   };
 }
@@ -129,10 +131,12 @@ function MediaPanel({ media, theme }) {
 
 export default function ServiceCardsShowcase({ onContactClick }) {
   const sectionRef = useRef(null);
+  const frameRef = useRef(0);
+  const targetProgressRef = useRef(0);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const updateTargetProgress = () => {
       const section = sectionRef.current;
 
       if (!section) {
@@ -142,18 +146,51 @@ export default function ServiceCardsShowcase({ onContactClick }) {
       const rect = section.getBoundingClientRect();
       const totalScrollable = Math.max(section.offsetHeight - window.innerHeight, 1);
       const scrolled = Math.min(Math.max(-rect.top, 0), totalScrollable);
-      const nextProgress = (scrolled / totalScrollable) * (cards.length - 1);
-
-      setProgress(nextProgress);
+      targetProgressRef.current = (scrolled / totalScrollable) * (cards.length - 1);
     };
 
-    handleScroll();
+    const animateProgress = () => {
+      frameRef.current = 0;
+
+      setProgress((currentProgress) => {
+        const nextProgress =
+          currentProgress + (targetProgressRef.current - currentProgress) * 0.085;
+
+        if (Math.abs(targetProgressRef.current - nextProgress) < 0.001) {
+          return targetProgressRef.current;
+        }
+
+        frameRef.current = window.requestAnimationFrame(animateProgress);
+        return nextProgress;
+      });
+    };
+
+    const startAnimation = () => {
+      if (!frameRef.current) {
+        frameRef.current = window.requestAnimationFrame(() => {
+          frameRef.current = 0;
+          animateProgress();
+        });
+      }
+    };
+
+    const handleScroll = () => {
+      updateTargetProgress();
+      startAnimation();
+    };
+
+    updateTargetProgress();
+    setProgress(targetProgressRef.current);
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleScroll);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
+
+      if (frameRef.current) {
+        window.cancelAnimationFrame(frameRef.current);
+      }
     };
   }, []);
 
@@ -161,7 +198,7 @@ export default function ServiceCardsShowcase({ onContactClick }) {
     <section
       ref={sectionRef}
       className="relative bg-black"
-      style={{ height: `${(cards.length + 0.8) * 100}vh` }}
+      style={{ height: `${(cards.length + 1.45) * 100}vh` }}
     >
       <div className="sticky top-0 h-screen overflow-hidden px-3 py-3 sm:px-4 sm:py-4 lg:px-5 lg:py-5">
         <div className="relative h-full w-full">
@@ -172,7 +209,7 @@ export default function ServiceCardsShowcase({ onContactClick }) {
             return (
               <article
                 key={card.title}
-                className={`absolute inset-0 rounded-[2.75rem] transition-[transform,opacity,box-shadow] duration-200 ease-out will-change-transform hover-lift ${
+                className={`absolute left-0 right-0 top-0 mx-auto h-[calc(100svh-1.5rem)] max-h-[980px] rounded-[2.75rem] transition-[box-shadow] duration-300 ease-out will-change-[transform,opacity,filter] hover-lift sm:h-[calc(100svh-2rem)] lg:h-[calc(100svh-2.5rem)] ${
                   isLight ? "bg-[#f7f6f4] text-[#111827]" : "bg-[#1f1f23] text-white"
                 }`}
                 style={getCardStyle(index, progress, cards.length)}

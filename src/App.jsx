@@ -15,6 +15,7 @@ import Sidebar from "./components/sidebar";
 import SplashCursor from "./components/SplashCursor";
 import StartProjectOverlay from "./components/StartProjectOverlay";
 import About from "./pages/About";
+import BlogDetails from "./pages/BlogDetails";
 import Blogs from "./pages/Blogs";
 import Contact from "./pages/Contact";
 import Home from "./pages/Home";
@@ -39,6 +40,10 @@ function AppLayout() {
   const navigate = useNavigate();
   const [isProjectOverlayOpen, setIsProjectOverlayOpen] = useState(false);
   const [isServicesOverlayOpen, setIsServicesOverlayOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname]);
 
   useEffect(() => {
     document.body.style.overflow =
@@ -113,6 +118,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:slug" element={<BlogDetails />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/services" element={<Services />} />

@@ -11,32 +11,19 @@ import { useRef } from "react";
 import BlogCardsSection from "../components/BlogCardsSection";
 import CustomersSection from "../components/CustomersSection";
 import ProjectsSection from "../components/ProjectsSection";
+import Seo from "../components/Seo";
 import ServiceCardsShowcase from "../components/ServiceCardsShowcase";
 import { CartoonButton } from "../components/ui/cartoon-button";
+import { blogPosts as allBlogPosts } from "../data/blogContent";
+import { projects } from "../data/projectsContent";
+import { useLeadForm } from "../hooks/useLeadForm";
 import customer1 from "../assets/customer/customer1.png";
 import customer2 from "../assets/customer/customer2.png";
 import customer3 from "../assets/customer/customer3.png";
 import customer4 from "../assets/customer/customer4.png";
 import customer5 from "../assets/customer/customer5.png";
-import digitalDevImage from "../assets/services/digitalDev.jpg";
 import howItWorkImage from "../assets/project/howITWork.jpg";
-import influencerMarketingImage from "../assets/services/influencerMarketing.jpg";
-import project1 from "../assets/project/project1.jpg";
-import project2 from "../assets/project/project2.png";
-import project3 from "../assets/project/project3.png";
-import project4 from "../assets/project/project4.png";
-import project5 from "../assets/project/project5.png";
-import project6 from "../assets/project/project6.jpg";
 import heroVideo from "../assets/video.mp4";
-
-const projects = [
-  { title: "Jovera Group", image: project1 },
-  { title: "Jovera Group", image: project2 },
-  { title: "Jovera Group", image: project3 },
-  { title: "Jovera Group", image: project6 },
-  { title: "Jovera Group", image: project4 },
-  { title: "Jovera Group", image: project5 },
-];
 
 const workflowSteps = [
   {
@@ -65,27 +52,6 @@ const workflowSteps = [
   },
 ];
 
-const blogPosts = [
-  {
-    category: "UI Design",
-    date: "May 24, 2022",
-    title: "Designers are meant to be loved, not to be understood.",
-    image: project1,
-  },
-  {
-    category: "Brand Strategy",
-    date: "May 28, 2022",
-    title: "Good interfaces feel simple because the thinking behind them is not.",
-    image: digitalDevImage,
-  },
-  {
-    category: "Creative",
-    date: "June 02, 2022",
-    title: "Color, motion, and clarity can change how people remember a brand.",
-    image: influencerMarketingImage,
-  },
-];
-
 const customers = [
   { name: "Jovera Tourism", image: customer1 },
   { name: "Jovera Tourism", image: customer2 },
@@ -96,6 +62,22 @@ const customers = [
 
 export default function Home() {
   const contactSectionRef = useRef(null);
+  const { formValues, isSubmitting, status, handleChange, handleSubmit } = useLeadForm();
+  const homeProjects = projects
+    .filter((project) => project.slug !== "jovera-group-website")
+    .slice(0, 6);
+  const homeBlogPosts = allBlogPosts.slice(0, 3).map((post) => ({
+    ...post,
+    category: post.tags?.[0] ?? "Blog",
+  }));
+  const phoneLinks = [
+    { label: "800-644-000", href: "tel:800644000" },
+    { label: "+97126311977", href: "tel:+97126311977" },
+  ];
+  const emailLinks = [
+    { label: "info@joveraits.ae", href: "mailto:info@joveraits.ae" },
+    { label: "info@jovera.ae", href: "mailto:info@jovera.ae" },
+  ];
 
   const scrollToContact = () => {
     contactSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -104,6 +86,18 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white">
       <>
+          <Seo
+            title="Creative, Digital & Performance Marketing Agency"
+            description="Alondra helps brands grow with digital marketing, branding, content, SEO, SEM, web development, and production services across the UAE."
+            path="/"
+            keywords="digital marketing agency UAE, branding agency Abu Dhabi, web development UAE, SEO services, SEM agency, content production"
+            structuredData={{
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Alondra",
+              url: typeof window !== "undefined" ? window.location.origin : undefined,
+            }}
+          />
           {/* Hero Section */}
           <section className="flex min-h-screen items-center px-6 py-8 sm:px-10 lg:px-16 lg:py-14 xl:px-20">
             <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,0.98fr)] lg:gap-16">
@@ -156,7 +150,7 @@ export default function Home() {
           </section>
 
           {/* Projects Section */}
-          <ProjectsSection projects={projects} onProjectClick={scrollToContact} />
+          <ProjectsSection projects={homeProjects} />
 
           {/* How It Works Section */}
           <section className="bg-black px-6 py-16 sm:px-10 lg:px-16 lg:py-24 xl:px-20">
@@ -210,7 +204,7 @@ export default function Home() {
           </section>
 
           {/* Blog Section */}
-          <BlogCardsSection posts={blogPosts} />
+          <BlogCardsSection posts={homeBlogPosts} />
 
           {/* Customers Section */}
           <CustomersSection customers={customers} />
@@ -260,9 +254,14 @@ export default function Home() {
                       <div>
                         <h4 className="text-2xl font-medium text-white">Phone Number</h4>
                         <p className="mt-4 text-lg leading-8 text-white/65">
-                          800-644-000
-                          <br />
-                          +97126311977
+                          {phoneLinks.map((item, index) => (
+                            <span key={item.label}>
+                              <a href={item.href} className="transition hover:text-[#d4a514]">
+                                {item.label}
+                              </a>
+                              {index < phoneLinks.length - 1 ? <br /> : null}
+                            </span>
+                          ))}
                         </p>
                       </div>
                     </div>
@@ -274,21 +273,35 @@ export default function Home() {
                       <div>
                         <h4 className="text-2xl font-medium text-white">Email Address</h4>
                         <p className="mt-4 text-lg leading-8 text-white/65">
-                          info@joveraits.ae
-                          <br />
-                          info@jovera.ae
+                          {emailLinks.map((item, index) => (
+                            <span key={item.label}>
+                              <a href={item.href} className="transition hover:text-[#d4a514]">
+                                {item.label}
+                              </a>
+                              {index < emailLinks.length - 1 ? <br /> : null}
+                            </span>
+                          ))}
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <form className="reveal hover-lift border border-white/35 px-8 py-10 sm:px-12 sm:py-12" data-reveal data-delay="2">
+                <form
+                  onSubmit={handleSubmit}
+                  className="reveal hover-lift border border-white/35 px-8 py-10 sm:px-12 sm:py-12"
+                  data-reveal
+                  data-delay="2"
+                >
                   <div className="space-y-10 text-left">
                     <label className="block">
                       <span className="text-2xl text-white">Name</span>
                       <input
+                        name="name"
                         type="text"
+                        value={formValues.name}
+                        onChange={handleChange}
+                        required
                         className="mt-4 w-full border-b border-white/35 bg-transparent pb-4 text-lg text-white outline-none placeholder:text-white/20 focus:border-white"
                       />
                     </label>
@@ -296,7 +309,11 @@ export default function Home() {
                     <label className="block">
                       <span className="text-2xl text-white">Phone Number</span>
                       <input
+                        name="phone"
                         type="text"
+                        value={formValues.phone}
+                        onChange={handleChange}
+                        required
                         className="mt-4 w-full border-b border-white/35 bg-transparent pb-4 text-lg text-white outline-none placeholder:text-white/20 focus:border-white"
                       />
                     </label>
@@ -304,7 +321,11 @@ export default function Home() {
                     <label className="block">
                       <span className="text-2xl text-white">Email</span>
                       <input
+                        name="email"
                         type="email"
+                        value={formValues.email}
+                        onChange={handleChange}
+                        required
                         className="mt-4 w-full border-b border-white/35 bg-transparent pb-4 text-lg text-white outline-none placeholder:text-white/20 focus:border-white"
                       />
                     </label>
@@ -312,14 +333,29 @@ export default function Home() {
                     <label className="block">
                       <span className="text-2xl text-white">Message</span>
                       <textarea
+                        name="description"
                         rows="4"
+                        value={formValues.description}
+                        onChange={handleChange}
+                        required
                         className="mt-4 w-full border-b border-white/35 bg-transparent pb-4 text-lg text-white outline-none placeholder:text-white/20 focus:border-white"
                       />
                     </label>
 
+                    {status.message ? (
+                      <p
+                        className={`text-sm ${
+                          status.type === "success" ? "text-[#d4a514]" : "text-[#ff8f8f]"
+                        }`}
+                      >
+                        {status.message}
+                      </p>
+                    ) : null}
+
                     <CartoonButton
                       type="submit"
-                      label="SUMIT"
+                      label={isSubmitting ? "Sending..." : "Submit"}
+                      disabled={isSubmitting}
                       color="bg-white"
                       textClassName="text-black"
                       borderClassName="border-[#d8d8d8]"

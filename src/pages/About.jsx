@@ -1,59 +1,67 @@
-import { useRef } from "react";
-import ContactSection from "../components/ContactSection";
-import CustomersSection from "../components/CustomersSection";
-import HowItWorksSection from "../components/HowItWorksSection";
-import PageIntro from "../components/PageIntro";
-import { aboutStats, customers, howItWorksImageSrc, workflowSteps } from "../data/siteContent";
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import AboutusImage from "../assets/about/AboutUs.png";
+import Seo from "../components/Seo";
 
 export default function About() {
-  const contactSectionRef = useRef(null);
-
   return (
-    <>
-      <PageIntro
-        eyebrow="About"
-        title="A creative advertising agency built for clarity, speed, and scale"
-        description="We partner with brands that need more than decoration. Our work blends strategy, design, content, and technology into campaigns that feel premium and perform with intent."
+    <div className="bg-[#111111] text-white">
+      <Seo
+        title="About Alondra"
+        description="Learn more about Alondra, a Jovera Group company delivering strategy, digital execution, branding, marketing, and production services."
+        path="/about"
+        keywords="about Alondra, Jovera Group, branding and digital agency UAE"
       />
-
-      <section className="bg-black px-6 py-8 sm:px-10 lg:px-16 lg:py-12 xl:px-20">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-          <div className="reveal text-left" data-reveal>
-            <p className="body-copy max-w-3xl">
-              Alondra brings together campaign thinking, creative production, and digital
-              execution under one roof. We work closely with clients to turn ideas into clear
-              experiences that feel cohesive across content, websites, media, and brand
-              touchpoints.
-            </p>
-            <p className="body-copy mt-8 max-w-3xl">
-              The goal is simple: create work that is memorable to audiences, practical for
-              teams, and effective enough to support real growth.
-            </p>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-            {aboutStats.map((stat, index) => (
-              <div
-                key={stat.value}
-                data-reveal
-                data-delay={index + 1}
-                className="reveal hover-lift rounded-[2rem] bg-[#171717] px-6 py-7 text-left shadow-[0_0_0_1px_rgba(255,255,255,0.04)]"
-              >
-                <div className="font-serif text-5xl text-[#d4a514]">{stat.value}</div>
-                <p className="mt-3 text-base leading-7 text-white/65">{stat.label}</p>
-              </div>
-            ))}
-          </div>
+      <section className="border-y border-white/10 px-6 py-6 sm:px-10 lg:px-16 xl:px-20 bg-[#424242]">
+        <div className="mx-auto max-w-6xl text-center ">
+          <h1 className="font-serif text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl">
+            About us
+          </h1>
         </div>
       </section>
 
-      <HowItWorksSection steps={workflowSteps} image={howItWorksImageSrc} />
-      <CustomersSection customers={customers} />
-      <ContactSection
-        sectionRef={contactSectionRef}
-        title="Let's talk about your brand"
-        description="If you're looking for a creative partner that can connect ideas with execution, we'd love to hear what you're building."
-      />
-    </>
+      <section className="px-6 py-14 sm:px-10 lg:px-16 lg:py-20 xl:px-20">
+        <div className="mx-auto max-w-6xl rounded-[2rem] ">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.02fr_0.92fr] lg:gap-16">
+            <div className="reveal relative" data-reveal>
+              
+
+              <div className="relative mx-auto max-w-[26rem]  ">
+                <img
+                  src={AboutusImage}
+                  alt="Alondra team at work"
+                  className="h-[24rem] w-full object-contain sm:h-[27rem]"
+                />
+              </div>
+            </div>
+
+            <div className="reveal text-left" data-reveal data-delay="1">
+              {/* <h2 className="font-serif text-5xl font-semibold tracking-[-0.04em] text-white sm:text-6xl">
+                About Us
+              </h2> */}
+              <p className="mt-8 text-lg leading-9 text-white/74">
+                Established in 2018 as part of the Jovera Group, Alondra brings strategy,
+                content, digital execution, and production together under one roof. We build
+                ideas that feel premium, move fast, and stay aligned with real business goals.
+              </p>
+              <p className="mt-8 text-lg leading-9 text-white/74">
+                Our team works across web development, digital marketing, SEM, SEO, brand
+                direction, and media production to deliver tailored solutions that improve
+                visibility, engagement, and long-term growth.
+              </p>
+
+              <Link
+                to="/projects"
+                className="mt-10 inline-flex items-center gap-3 bg-[#d4a514] px-8 py-4 text-base font-semibold text-black transition hover:translate-y-[-2px]"
+                style={{ clipPath: "polygon(0 0,100% 0,94% 100%,0 100%)" }}
+              >
+                Explore Projects
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
