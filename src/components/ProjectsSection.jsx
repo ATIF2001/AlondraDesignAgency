@@ -176,7 +176,7 @@ export default function ProjectsSection({ projects }) {
   return (
     <>
       <section className="bg-black px-6 py-16 sm:px-10 lg:px-16 lg:py-24 xl:px-20">
-        <div className="mx-auto max-w-7xl">
+        <div className="w-full">
           <div className="reveal mb-12 text-center" data-reveal>
             <h2 className="pb-4 font-serif text-3xl font-semibold tracking-[-0.04em] text-white sm:text-4xl">
               {projectSectionCopy.title}

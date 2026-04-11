@@ -7,7 +7,7 @@ export default function BlogCardsSection({ posts }) {
 
   return (
     <section className="bg-black px-6 py-16 sm:px-10 lg:px-16 lg:py-24 xl:px-20">
-      <div className="mx-auto max-w-7xl">
+      <div className="w-full">
         <div
           className="reveal mb-12 flex flex-col gap-6 text-left sm:flex-row sm:items-center sm:justify-between"
           data-reveal

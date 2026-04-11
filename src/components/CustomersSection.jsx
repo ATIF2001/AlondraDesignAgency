@@ -1,7 +1,7 @@
 export default function CustomersSection({ customers }) {
   return (
     <section className="bg-black px-6 py-10 sm:px-10 lg:px-16 lg:py-16 xl:px-20">
-      <div className="mx-auto max-w-6xl text-center">
+      <div className="w-full text-center">
         <h2 className="reveal text-2xl font-semibold text-white sm:text-3xl" data-reveal>
           Trusted and valued by 100+ customers including
         </h2>
@@ -11,7 +11,7 @@ export default function CustomersSection({ customers }) {
           data-reveal
           data-delay="1"
         >
-          <div className="grid grid-cols-2 items-center gap-8 md:grid-cols-3 xl:grid-cols-5">
+          <div className="grid grid-cols-2 items-center gap-8 md:grid-cols-3 xl:grid-cols-6">
             {customers.map((customer, index) => (
               <div
                 key={`${customer.name}-${index}`}

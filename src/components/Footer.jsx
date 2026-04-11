@@ -1,6 +1,6 @@
 import logo from "../assets/logo.png";
 import { NavLink } from "react-router-dom";
-import { footerPageItems } from "../data/navigation";
+import { footerPageItems, routes } from "../data/navigation";
 
 const services = [
   "social media marketing",
@@ -27,10 +27,18 @@ function LinkedinIcon(props) {
   );
 }
 
-function TwitterIcon(props) {
+function InstagramIcon(props) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <path d="M18.9 7.15c.72-.05 1.44-.28 2.1-.6-.25.76-.8 1.4-1.47 1.82v.46c0 4.72-3.6 10.16-10.16 10.16-2.02 0-3.9-.6-5.47-1.61.28.03.57.04.87.04 1.67 0 3.2-.56 4.42-1.52a3.58 3.58 0 0 1-3.34-2.48c.22.04.45.07.69.07.33 0 .65-.04.95-.12A3.57 3.57 0 0 1 4.62 10v-.04c.48.27 1.03.43 1.62.45a3.57 3.57 0 0 1-1.11-4.76 10.14 10.14 0 0 0 7.36 3.73 3.58 3.58 0 0 1 6.1-3.26 7.1 7.1 0 0 0 2.27-.87 3.58 3.58 0 0 1-1.57 1.97Z" />
+      <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5a3.95 3.95 0 0 0 3.95 3.95h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5a3.95 3.95 0 0 0-3.95-3.95h-8.5Zm8.93 1.35a1.12 1.12 0 1 1 0 2.24 1.12 1.12 0 0 1 0-2.24ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.8A3.2 3.2 0 1 0 12 15.2 3.2 3.2 0 0 0 12 8.8Z" />
+    </svg>
+  );
+}
+
+function TiktokIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M15.7 3c.18 1.48 1.02 2.86 2.31 3.71.92.61 1.97.94 3.05.97v3.07a8.5 8.5 0 0 1-4.7-1.41v5.8c0 3.5-2.83 6.33-6.33 6.33A6.33 6.33 0 0 1 3.7 15.1c0-3.5 2.83-6.33 6.33-6.33.31 0 .61.02.91.07v3.13a3.2 3.2 0 0 0-.91-.13 3.26 3.26 0 0 0 0 6.52c1.69 0 3.11-1.3 3.24-2.98V3h2.43Z" />
     </svg>
   );
 }
@@ -44,16 +52,21 @@ function YoutubeIcon(props) {
 }
 
 const socials = [
-  { label: "Facebook", icon: FacebookIcon },
-  { label: "LinkedIn", icon: LinkedinIcon },
-  { label: "Twitter", icon: TwitterIcon },
-  { label: "YouTube", icon: YoutubeIcon },
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/jovera/", icon: LinkedinIcon },
+  { label: "TikTok", href: "https://www.tiktok.com/@jovera.ae", icon: TiktokIcon },
+  { label: "YouTube", href: "https://www.youtube.com/@joveragroup/null", icon: YoutubeIcon },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/accounts/login/?next=%2Fjoveraa.ae%2F&source=omni_redirect&hl=en",
+    icon: InstagramIcon,
+  },
+  { label: "Facebook", href: "https://www.facebook.com/joveraa.ae/", icon: FacebookIcon },
 ];
 
 export default function Footer() {
   return (
     <footer className="bg-[#202020] px-6 py-14 text-white sm:px-10 lg:px-16 lg:py-20 xl:px-20">
-      <div className="mx-auto max-w-7xl">
+      <div className="w-full">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_0.95fr_1.2fr_0.85fr] lg:gap-16">
           <div className="flex items-start">
             <img src={logo} alt="Alondra logo" className="w-56 max-w-full" />
@@ -92,7 +105,12 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col gap-8 border-t border-white/6 pt-10 lg:flex-row lg:items-center lg:justify-between">
-          <p className="text-left text-[1.35rem] text-white/92">Terms & Conditions</p>
+          <NavLink
+            to={routes.terms}
+            className="text-left text-[1.35rem] text-white/92 transition hover:text-[#d4a514]"
+          >
+            Terms & Conditions
+          </NavLink>
           <p className="text-center text-[1.35rem] text-white/92">
             @2025 Jovera Group. All Rights Reserved.
           </p>
@@ -103,7 +121,9 @@ export default function Footer() {
               return (
                 <a
                   key={social.label}
-                  href="#"
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
                   aria-label={social.label}
                   className="hover-lift inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#161616] text-white transition hover:bg-[#2a2a2a]"
                 >

@@ -59,7 +59,7 @@ function BlogCard({ post, compact = false, horizontal = false }) {
         <div className="mt-3 flex items-start justify-between gap-4">
           <Link to={`/blogs/${post.slug}`} className="block">
             {compact || horizontal ? (
-              <h3 className="text-[1.9rem] font-medium leading-[1.2] tracking-[-0.04em] text-white">
+              <h3 className="text-[1.9rem] font-medium leading-[1.2] tracking-[-0.04em] text-white line-clamp-1">
                 {post.title}
               </h3>
             ) : (
@@ -70,7 +70,7 @@ function BlogCard({ post, compact = false, horizontal = false }) {
             <ArrowUpRight className="mt-2 h-5 w-5 shrink-0 text-white sm:h-6 sm:w-6" />
           </Link>
         </div>
-        <p className={`mt-3 ${compact ? "text-lg" : "text-lg"} leading-8 text-white/68`}>
+        <p className={`mt-3 ${compact ? "text-lg" : "text-lg"} leading-8 text-white/68 line-clamp-3`}>
           {post.description}
         </p>
         <BlogTags tags={post.tags} />

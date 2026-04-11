@@ -22,6 +22,7 @@ import customer2 from "../assets/customer/customer2.png";
 import customer3 from "../assets/customer/customer3.png";
 import customer4 from "../assets/customer/customer4.png";
 import customer5 from "../assets/customer/customer5.png";
+import customer6 from "../assets/customer/customer6.webp";
 import howItWorkImage from "../assets/project/howITWork.jpg";
 import heroVideo from "../assets/video.mp4";
 
@@ -58,6 +59,7 @@ const customers = [
   { name: "Vanguard Properties", image: customer3 },
   { name: "Jovera Real Estate", image: customer4 },
   { name: "Jovera Group", image: customer5 },
+   { name: "Jovera IT", image: customer6 }
 ];
 
 export default function Home() {
@@ -99,7 +101,7 @@ export default function Home() {
             }}
           />
           {/* Hero Section */}
-          <section className="flex min-h-screen items-center px-6 py-8 sm:px-10 lg:px-16 lg:py-14 xl:px-20">
+          <section className="flex min-h-screen items-center px-6 py-8 sm:px-10 lg:px-16 lg:py-14 xl:px-20 ">
             <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,0.98fr)] lg:gap-16">
               <section className="reveal max-w-[620px] text-left" data-reveal>
                 <h1 className="font-serif text-[3.3rem] leading-[0.98] font-semibold tracking-[-0.05em] text-white sm:text-[4.4rem] lg:text-[5.25rem] xl:text-[5.9rem]">
@@ -154,7 +156,7 @@ export default function Home() {
 
           {/* How It Works Section */}
           <section className="bg-black px-6 py-16 sm:px-10 lg:px-16 lg:py-24 xl:px-20">
-            <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.88fr_1fr] lg:gap-16 xl:gap-20">
+            <div className="grid w-full gap-14 lg:grid-cols-[0.88fr_1fr] lg:gap-16 xl:gap-20">
               <div className="reveal text-left" data-reveal>
                 <h2 className="font-serif text-5xl font-semibold leading-none text-white sm:text-6xl lg:text-[5.5rem]">
                   How It Works
@@ -214,7 +216,7 @@ export default function Home() {
             ref={contactSectionRef}
             className="bg-black px-6 py-16 sm:px-10 lg:px-16 lg:py-24 xl:px-20"
           >
-            <div className="mx-auto max-w-7xl">
+            <div className="w-full">
               <div className="reveal mx-auto max-w-3xl text-center" data-reveal>
                 <h2 className="font-serif text-4xl font-semibold text-white sm:text-5xl">
                   Contact us today

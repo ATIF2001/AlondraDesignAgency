@@ -9,6 +9,9 @@ export default function Sidebar({
   onStartProjectClick,
 }) {
   const location = useLocation();
+  const navItemClass =
+    "flex h-[52px] w-full items-center justify-between rounded-2xl px-4 text-left text-[19px] leading-none font-medium tracking-[-0.02em] font-[inherit] transition";
+  const navLabelClass = "block flex-1 text-left text-[19px] leading-none font-medium tracking-[-0.02em] font-[inherit]";
 
   const isPathActive = (path) => {
     if (path === "/") return location.pathname === "/";
@@ -36,27 +39,25 @@ export default function Sidebar({
                 <button
                   type="button"
                   onClick={onServicesClick}
-                  className={`flex items-center justify-between rounded-2xl px-4 py-3 text-left text-[19px] font-medium tracking-[-0.02em] transition ${
+                  className={`${navItemClass} ${
                     isPathActive(item.path)
                       ? "bg-white/6 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)]"
                       : "text-white/90 hover:bg-white/4 hover:text-[#d4a514]"
                   }`}
                 >
-                  <span className="flex-1 text-left">
-                    {item.label}
-                  </span>
+                  <span className={navLabelClass}>{item.label}</span>
                   <ChevronRight className="ml-3 h-5 w-5 shrink-0 text-white" />
                 </button>
               ) : (
                 <NavLink
                   to={item.path}
-                  className={`flex w-full items-center justify-between rounded-2xl px-4 py-3 text-left text-[19px] font-medium tracking-[-0.02em] transition ${
+                  className={`${navItemClass} ${
                     isPathActive(item.path)
                       ? "bg-white/6 text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)]"
                       : "text-white/90 hover:bg-white/4 hover:text-[#d4a514]"
                   }`}
                 >
-                  <span>{item.label}</span>
+                  <span className={navLabelClass}>{item.label}</span>
                 </NavLink>
               )}
             </li>
@@ -64,23 +65,27 @@ export default function Sidebar({
         </ul>
       </div>
 
-      <button
-        type="button"
-        onClick={onStartProjectClick}
-        className="mt-10 flex h-16 items-center justify-center gap-3 bg-[#d4a514] px-5 text-lg font-medium text-black transition hover:bg-[#e2b51f] lg:mt-12"
-        style={{ clipPath: "polygon(0 0, 100% 0, 92% 100%, 0 100%)" }}
-      >
-        {isProjectOverlayOpen ? (
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-black text-white">
-            <X className="h-4 w-4" strokeWidth={3} />
-          </span>
-        ) : (
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-black">
-            <CirclePlus className="h-5 w-5" strokeWidth={2.1} />
-          </span>
-        )}
-        <span>{isProjectOverlayOpen ? "Close" : "Start Project"}</span>
-      </button>
+   <button
+  type="button"
+  onClick={onStartProjectClick}
+  className="mt-10 flex h-16 items-center justify-center gap-3 bg-[#d4a514] px-5 text-base font-medium text-black transition hover:bg-[#e2b51f] lg:mt-12"
+  style={{ clipPath: "polygon(0 0, 100% 0, 92% 100%, 0 100%)" }}
+>
+  {isProjectOverlayOpen ? (
+    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-black text-white">
+      <X className="h-4 w-4" strokeWidth={3} />
+    </span>
+  ) : (
+    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-black">
+      <CirclePlus className="h-5 w-5" strokeWidth={2.1} />
+    </span>
+  )}
+
+  {/* 👇 Only this text becomes smaller */}
+  <span className="text-sm">
+    {isProjectOverlayOpen ? "Close" : "Start Project"}
+  </span>
+</button>
     </aside>
   );
 }

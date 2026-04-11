@@ -5,6 +5,7 @@ export const routes = {
   about: "/about",
   contact: "/contact",
   blogs: "/blogs",
+  terms: "/terms-and-conditions",
 };
 
 export const sidebarItems = [

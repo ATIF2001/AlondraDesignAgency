@@ -21,6 +21,7 @@ import Contact from "./pages/Contact";
 import Home from "./pages/Home";
 import ProjectsPage from "./pages/Projects";
 import Services from "./pages/Services";
+import Terms from "./pages/Terms";
 import { servicePageComponents } from "./pages/services/index.js";
 
 function ServiceRouteRenderer() {
@@ -122,6 +123,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/terms-and-conditions" element={<Terms />} />
           <Route path="/service/:slug" element={<ServiceRouteRenderer />} />
           <Route path="/services/:slug" element={<ServiceRouteRenderer />} />
           <Route path="*" element={<Navigate to="/" replace />} />
